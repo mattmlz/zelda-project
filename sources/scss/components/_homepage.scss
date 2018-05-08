@@ -1,3 +1,4 @@
+/* HEADER */
 .header {
   width: 100vw;
   height: 50px;
@@ -7,24 +8,60 @@
   align-items: center;
   justify-content: flex-end;
   .links {
+    margin-right: 15px;
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+    ul {
+      background: gray;
+      list-style: none;
+      width: 100%;
+    }
+    li {
+      float: left;
+      position: relative;
+      width: auto;
+    }
     a {
-      padding: 10px;
-    }
-    a:link {
-      color: $white-balanced;
+      background: $black;
+      color: $white;
+      display: block;
+      padding: 10px 25px;
+      text-align: center;
       text-decoration: none;
+      transition: all .25s ease;
     }
-    a:visited {
-      color: $white-balanced;
-      text-decoration: none;
+    li:hover a {
+      background: $grey;
     }
-    a:hover {
-      background: $white-balanced;
-      color: $black-balanced;
+  }
+  .submenu {
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 35px;
+    visibility: hidden;
+    z-index: 1;
+  }
+  li:hover ul.submenu {
+    opacity: 1;
+    top: 35px;
+    /* adjust this as per top nav padding top & bottom comes */
+    visibility: visible;
+  }
+  .submenu {
+    li {
+      float: none;
+      width: 100%;
+    }
+    a {
+      background-color: #000000;
     }
   }
 }
 
+/* CONTENT */
 main {
   width: 100vw;
   height: 100vh;
