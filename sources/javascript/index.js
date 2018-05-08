@@ -1,4 +1,4 @@
-// import Application from './Application.js'
+// import Application from './components/Application.js'
 import * as PIXI from 'pixi.js'
 import * as THREE from 'three'
 
