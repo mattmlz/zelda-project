@@ -16,6 +16,8 @@ Simple static HTML/CSS/JS template
 - Gulp
 - ES2015 transpiler
 - Sass compiler
+- GreenSock
+- Pixi JS
 - Sourcemaps
 - Watchers
 - Static server
