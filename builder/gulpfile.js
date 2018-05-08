@@ -25,11 +25,11 @@ let gulp         = require( 'gulp' ),
  */
 let bundler = null
 
-const bundle = function()
+const bundle = function(name)
 {
     bundler.bundle()
         .on( 'error', gulp_notify.onError( { title: 'Gulp: scripts' } ) )
-        .pipe( source( 'bundle.js' ) )
+        .pipe( source( name +'.js' ) )
         .pipe( buffer() )
         .pipe( sourcemaps.init( { loadMaps: true } ) )
         .pipe( sourcemaps.write( './' ) )
@@ -60,9 +60,34 @@ gulp.task( 'scripts', function()
     bundler.on( 'update', bundle )  
 
     // Bundle
-    bundle()
+    bundle('bundle-index')
+
+
 })
 
+gulp.task( 'scripts-majora', function()
+{
+    // Create bundler
+    bundler = browserify( {
+            cache       : {},
+            packageCache: {},
+            entries     : '../sources/javascript/majoras_index.js',
+            debug       : true,
+            paths       : [ './node_modules', '../sources/javascript' ]
+        } )
+        .transform( 'babelify', { presets: [ 'babel-preset-es2015' ].map( require.resolve ) } )
+
+    // Watch
+    bundler.plugin( watchify )
+
+    // Listen to bundler update
+    bundler.on( 'update', bundle )  
+
+    // Bundle
+    bundle('bundle-majora')
+
+    
+})
 /**
  * Styles
  */
@@ -148,7 +173,7 @@ gulp.task( 'default', function()
 {
     // Scripts
     gulp.start( 'scripts' )
-
+    gulp.start( 'scripts-majora' )
     // Styles
     gulp.start( 'styles' )
     gulp.watch( '../sources/scss/**', [ 'styles' ] )
@@ -158,9 +183,3 @@ gulp.task( 'default', function()
     // Serve
     gulp.start( 'serve' )
 } )
-
-gulp.task('watch', function()
-{
-    
-
-})

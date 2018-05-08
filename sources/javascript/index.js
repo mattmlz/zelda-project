@@ -6,3 +6,4 @@ import * as THREE from 'three'
 import {TweenMax, Power2, TimelineLite} from "gsap";
 
 console.log(PIXI)
+
