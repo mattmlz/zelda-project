@@ -27,6 +27,7 @@
     "watchify": "^3.8.0"
   },
   "dependencies": {
-    "gulp-sass": "^4.0.1"
+    "gulp-sass": "^4.0.1",
+    "pixi.js": "^4.7.3"
   }
 }
