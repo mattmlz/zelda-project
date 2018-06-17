@@ -20,7 +20,7 @@ class TorusGeometry
     draw()
     {
         const textureLoader = new THREE.TextureLoader()
-        const ring = textureLoader.load('./../assets/ring.png')
+        const ring = textureLoader.load('./../assets/images/ring.png')
         ring.offset.y = .55
         ring.repeat.set(2,2)
         ring.wrapS = THREE.RepeatWrapping;

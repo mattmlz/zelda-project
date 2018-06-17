@@ -85,39 +85,39 @@ const animate = () =>
     
     camera.rotation.y += rotation/3
     
-    if(directions.up)
-    {
-        camera.rotation.x += (Math.PI / 6) / 50
-        camera.matrix.extractBasis(right,up,at);
-    }
-    if(directions.down)
-    {
-        camera.rotation.x -= (Math.PI / 6) / 50
-        camera.matrix.extractBasis(right,up,at);
-    }
-    if(directions.forward) {
-        // camera.position.y = 20
-        camera.position.add(at.multiplyScalar(-.5));
-        camera.matrix.extractBasis(right,up,at);
+    // if(directions.up)
+    // {
+    //     camera.rotation.x += (Math.PI / 6) / 50
+    //     camera.matrix.extractBasis(right,up,at);
+    // }
+    // if(directions.down)
+    // {
+    //     camera.rotation.x -= (Math.PI / 6) / 50
+    //     camera.matrix.extractBasis(right,up,at);
+    // }
+    // if(directions.forward) {
+    //     // camera.position.y = 20
+    //     camera.position.add(at.multiplyScalar(-.5));
+    //     camera.matrix.extractBasis(right,up,at);
         
-    }
-    if(directions.backward) {
-        // camera.position.y = 20
-        camera.position.add(at.multiplyScalar(.5));
-        camera.matrix.extractBasis(right,up,at);
+    // }
+    // if(directions.backward) {
+    //     // camera.position.y = 20
+    //     camera.position.add(at.multiplyScalar(.5));
+    //     camera.matrix.extractBasis(right,up,at);
         
-    }
-    if(directions.left) {
-        // camera.position.y = 20
-        camera.position.add(right.multiplyScalar(-.5));
-        camera.matrix.extractBasis(right,up,at);
+    // }
+    // if(directions.left) {
+    //     // camera.position.y = 20
+    //     camera.position.add(right.multiplyScalar(-.5));
+    //     camera.matrix.extractBasis(right,up,at);
        
-    }
-    if(directions.right) {
-        // camera.position.y = 20
-        camera.position.add(right.multiplyScalar(.5));
-        camera.matrix.extractBasis(right,up,at);
-    }
+    // }
+    // if(directions.right) {
+    //     // camera.position.y = 20
+    //     camera.position.add(right.multiplyScalar(.5));
+    //     camera.matrix.extractBasis(right,up,at);
+    // }
     renderer.render(currentScene,camera)
 }
 animate()
@@ -147,8 +147,6 @@ document.addEventListener('keydown', (e) =>
         case 83: // S
             directions.backward = true;
             break;
-        case 84:
-            console.log(camera.position)
 
     }
 })
@@ -257,11 +255,7 @@ const showtext = (text_id) =>
     }
 }
 const dothis = () =>
-{
-    console.log(camera.position.x)
-    console.log(camera.position.y)
-    console.log(camera.position.z)
-    
+{ 
     switch (currentPhase) {
         case 0:
             
@@ -408,7 +402,6 @@ mountdoomLoader_inside.load('./../assets/objects/MountDoomInside1.0.obj', functi
     mountdoom_inside.position.y = -300;
     mountdoom_inside.position.x = -217;
     scene_inside.add(mountdoom_inside);
-    console.log(mountdoom_inside)
 });
 
 const lampLight_inside = new THREE.PointLight(0x28201B, 1);
