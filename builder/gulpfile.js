@@ -25,11 +25,35 @@ let gulp         = require( 'gulp' ),
  */
 let bundler = null
 
-const bundle = function(name)
+const bundleLotr = function()
 {
     bundler.bundle()
         .on( 'error', gulp_notify.onError( { title: 'Gulp: scripts' } ) )
-        .pipe( source( name +'.js' ) )
+        .pipe( source( 'bundle-lotr.js') )
+        .pipe( buffer() )
+        .pipe( sourcemaps.init( { loadMaps: true } ) )
+        .pipe( sourcemaps.write( './' ) )
+        .pipe( gulp.dest( '../dist/assets/javascript' ) )
+        .pipe( browserSync.stream() )
+        .pipe( gulp_notify( { title: 'Gulp: scripts', message: 'success lotr bundle' } ) )
+}
+const bundleMajoras = function()
+{
+    bundler.bundle()
+        .on( 'error', gulp_notify.onError( { title: 'Gulp: scripts' } ) )
+        .pipe( source( 'bundle-majoras.js') )
+        .pipe( buffer() )
+        .pipe( sourcemaps.init( { loadMaps: true } ) )
+        .pipe( sourcemaps.write( './' ) )
+        .pipe( gulp.dest( '../dist/assets/javascript' ) )
+        .pipe( browserSync.stream() )
+        .pipe( gulp_notify( { title: 'Gulp: scripts', message: 'success majora bundle' } ) )
+}
+const bundle = function()
+{
+    bundler.bundle()
+        .on( 'error', gulp_notify.onError( { title: 'Gulp: scripts' } ) )
+        .pipe( source( 'bundle-index.js' ) )
         .pipe( buffer() )
         .pipe( sourcemaps.init( { loadMaps: true } ) )
         .pipe( sourcemaps.write( './' ) )
@@ -49,7 +73,7 @@ gulp.task( 'scripts', function()
             packageCache: {},
             entries     : '../sources/javascript/index.js',
             debug       : true,
-            paths       : [ './node_modules', '../sources/javascript' ]
+            paths       : [ './node_modules', '../sources/javascript/index.js', '../sources/javascript/components' ]
         } )
         .transform( 'babelify', { presets: [ 'babel-preset-es2015' ].map( require.resolve ) } )
 
@@ -60,20 +84,18 @@ gulp.task( 'scripts', function()
     bundler.on( 'update', bundle )  
 
     // Bundle
-    bundle('bundle-index')
-
+    bundle()
 
 })
-
 gulp.task( 'scripts-majora', function()
 {
     // Create bundler
     bundler = browserify( {
             cache       : {},
             packageCache: {},
-            entries     : '../sources/javascript/majoras_index.js',
+            entries     : '../sources/javascript/majoras.js',
             debug       : true,
-            paths       : [ './node_modules', '../sources/javascript' ]
+            paths       : [ './node_modules', '../sources/javascript/majoras.js','../sources/javascript/components']
         } )
         .transform( 'babelify', { presets: [ 'babel-preset-es2015' ].map( require.resolve ) } )
 
@@ -81,13 +103,36 @@ gulp.task( 'scripts-majora', function()
     bundler.plugin( watchify )
 
     // Listen to bundler update
-    bundler.on( 'update', bundle )  
+    bundler.on( 'update', bundleMajoras )  
 
     // Bundle
-    bundle('bundle-majora')
-
-    
+    bundleMajoras()
 })
+
+
+gulp.task( 'scripts-lotr', function()
+{
+    // Create bundler
+    bundler = browserify( {
+            cache       : {},
+            packageCache: {},
+            entries     : '../sources/javascript/lotr.js',
+            debug       : true,
+            paths       : [ './node_modules', '../sources/javascript/lotr.js','../sources/javascript/components']
+        } )
+        .transform( 'babelify', { presets: [ 'babel-preset-es2015' ].map( require.resolve ) } )
+
+    // Watch
+    bundler.plugin( watchify )
+
+    // Listen to bundler update
+    bundler.on( 'update', bundleLotr )  
+
+    // Bundle
+    bundleLotr()
+})
+
+
 /**
  * Styles
  */
@@ -144,6 +189,18 @@ gulp.task( 'build-scripts', function()
         .pipe( gulp.dest( '../dist/assets/javascript' ) )
 } )
 
+gulp.task( 'build-sounds', function()
+{
+    return gulp.src( '../sources/assets/sounds/*.mp3' )
+        .pipe( gulp.dest( '../dist/assets/sounds' ) )
+} )
+
+gulp.task( 'build-obj', function()
+{
+    return gulp.src( '../sources/assets/objects/*.obj' )
+        .pipe( gulp.dest( '../dist/assets/objects' ) )
+} )
+
 gulp.task( 'build-styles', function()
 {
     return gulp.src( '../dist/assets/stylesheet/main.css' )
@@ -157,7 +214,7 @@ gulp.task( 'remove-maps', function()
         .pipe( gulp_clean( { force: true, read: false } ) )
 } )
 
-gulp.task( 'build', [ 'build-index', 'build-pages', 'build-scripts', 'build-styles', 'remove-maps' ], function()
+gulp.task( 'build', [ 'build-index', 'build-pages', 'build-scripts', 'build-styles', 'remove-maps', 'build-sounds','build-obj'], function()
 {
     return gulp.src( './' )
         .pipe( gulp_notify( {
@@ -174,6 +231,7 @@ gulp.task( 'default', function()
     // Scripts
     gulp.start( 'scripts' )
     gulp.start( 'scripts-majora' )
+    gulp.start( 'scripts-lotr' )
     // Styles
     gulp.start( 'styles' )
     gulp.watch( '../sources/scss/**', [ 'styles' ] )

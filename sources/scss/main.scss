@@ -1,10 +1,92 @@
 @import 'components/reset';
 @import 'components/variables';
 @import 'components/mixins';
-
+@import url('https://fonts.googleapis.com/css?family=Pinyon+Script');
+*
+{
+    margin: 0;
+    padding: 0;
+}
 body
 {
     //Example
     @include center();
-    background : $white;
+    margin : 0;
+}
+a
+{
+    text-decoration: none;
+    color: white;
+}
+.background
+{
+    @include center();
+    background: #1B1B1B;
+    opacity: 0;
+    z-index: 1;
+}
+canvas
+{
+    @include center();
+    background : #15120F;
+}
+.lotr-text__container
+{
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 0%;
+    left :50%;
+    transform :translateX(-50%);
+    z-index :2;
+    background:black;
+    opacity :0.5;
+    font-family: 'Pinyon Script', cursive;    
+    .lotr-text
+    {
+        position :absolute;
+        top :50%;
+        left: 50%;
+        transform :translate(-50%, -50%);
+        text-align :center;
+        color  :white;
+        font-size :30px ;
+    }
+    .back_to_menu
+    {
+        position :absolute;
+        top :50%;
+        left: 10%;
+        transform :translate(-50%, -50%);
+        text-align :center;
+        color  :white;
+        font-size :24px ;
+    }
+    .press-right
+    {
+        position :absolute;
+        top :50%;
+        right: 5%;
+        transform :translateY(-50%);
+        text-align :center;
+        color  :white;
+        font-size: 24px;
+    }
+}
+
+
+body {
+  background: #000000;
+  /* background-image: url('../images/zeldaBackground.jpg'); */
+  text-align: center;
+}
+
+.fadeScreen{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: none;
 }
