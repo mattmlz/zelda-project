@@ -191,7 +191,7 @@ gulp.task( 'build-scripts', function()
 
 gulp.task( 'build-sounds', function()
 {
-    return gulp.src( '../sources/assets/sounds/*.mp3' )
+    return gulp.src( ['../sources/assets/sounds/*.mp3', '../sources/assets/sounds/*.wav'] )
         .pipe( gulp.dest( '../dist/assets/sounds' ) )
 } )
 
@@ -199,6 +199,18 @@ gulp.task( 'build-obj', function()
 {
     return gulp.src( '../sources/assets/objects/*.obj' )
         .pipe( gulp.dest( '../dist/assets/objects' ) )
+} )
+
+gulp.task( 'build-img', function()
+{
+    return gulp.src( '../sources/assets/images/*.png' )
+        .pipe( gulp.dest( '../dist/assets/images' ) )
+} )
+
+gulp.task( 'build-video', function()
+{
+    return gulp.src( '../sources/assets/images/*.mp4' )
+        .pipe( gulp.dest( '../dist/assets/images' ) )
 } )
 
 gulp.task( 'build-styles', function()
@@ -214,7 +226,7 @@ gulp.task( 'remove-maps', function()
         .pipe( gulp_clean( { force: true, read: false } ) )
 } )
 
-gulp.task( 'build', [ 'build-index', 'build-pages', 'build-scripts', 'build-styles', 'remove-maps', 'build-sounds','build-obj'], function()
+gulp.task( 'build', [ 'build-index', 'build-pages', 'build-scripts', 'build-styles', 'remove-maps', 'build-sounds','build-obj', 'build-img','build-video'], function()
 {
     return gulp.src( './' )
         .pipe( gulp_notify( {

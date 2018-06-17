@@ -90,3 +90,422 @@ body {
   opacity: 0;
   display: none;
 }
+
+
+// @font-face {
+//     font-family: "GeosansLight";
+//     src:url("../fonts/GeosansLight.ttf");
+// }
+
+// @font-face {
+//     font-family: "GeosansLight-Oblique";
+//     src:url("../fonts/GeosansLight-Oblique.ttf");
+// }
+
+// @font-face {
+//     font-family: "Slabo";
+//     src:url("../fonts/Slabo27px-Regular.ttf");
+// }
+
+
+@keyframes quote {
+    0% {opacity: 0;}    
+    50% {opacity: 0.9;}
+    100% {opacity: 0;}    
+}
+
+@keyframes menudisplay {
+    0% {opacity: 0;
+        visibility: hidden;}
+    80% {opacity: 0;
+        visibility: hidden;}
+    100% {opacity: 1;
+        visibility: visible;}
+}
+
+@keyframes quote {
+    0% {opacity: 0;}
+    50% {opacity: 0.9;}
+    100% {opacity: 0;}    
+}
+
+@keyframes titleappears {
+    0% {opacity: 0;}    
+    50% {opacity: 0.9;}
+}
+
+@keyframes enter {
+    0% {opacity: 1;}    
+    100% {opacity: 0;}
+}
+
+body {
+    cursor: none;
+}
+
+body a{
+    cursor: none;    
+}
+
+.enter {
+    top: 56%;
+    left: 50%;
+    position :absolute;
+    height: 400px;
+    width: 400px;
+    height: 200px;  
+    margin-top: -200px;
+    margin-left: -200px;
+    text-align: center;
+    letter-spacing: 0.3em;
+    font-size: 3vw;   
+    // font-family: Geosanslight;
+    color: rgb(211, 211, 211);    
+    z-index: 100;
+    transition: 0.5s;
+    cursor: none;   
+    animation-name: name;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.enter:hover {
+    color: white;
+    letter-spacing: 0.7em;
+}
+
+.toggle {
+    display: none;
+}
+button
+{
+    background: rgba(0,0,0,0);
+    border: none;
+}
+.evilkinds {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: white;
+    line-height: 2em;
+    letter-spacing: 0.5em;
+    font-size: 3vw;    
+    // font-family: Geosanslight;
+    opacity: 0;
+    top: 40%;
+    animation-name: titleappears;
+    animation-duration: 6s;
+    animation-delay: 0.75s;
+}
+
+.quote {
+    color: white;
+    line-height: 2em;
+    letter-spacing: 0.5em;
+    font-size: 1vw;    
+    // font-family: Geosanslight;
+}
+
+.quote1 {
+    position: absolute;  
+    top: 55%;
+    left: 35%;
+    opacity: 0;    
+    animation-name: quote;
+    animation-duration: 4s;
+    animation-delay: 3s;
+}
+
+.quote2 {
+    position: absolute;    
+    top: 20%;
+    left: 15%;
+    opacity: 0;    
+    animation-name: quote;
+    animation-duration: 4s;
+    animation-delay: 2.5s;    
+}
+
+.quote3 {
+    position: absolute;    
+    top: 75%;
+    left: 25%;
+    opacity: 0;        
+    animation-name: quote;
+    animation-duration: 3s;
+    animation-delay: 3.5s;    
+}
+
+.quote4 {
+    position: absolute;    
+    top: 75%;
+    left: 55%;
+    opacity: 0;        
+    animation-name: quote;
+    animation-duration: 4s;
+    animation-delay: 2.75s;    
+}
+
+.quote5 {
+    position: absolute;    
+    top: 55%;
+    left: 10%;
+    opacity: 0;        
+    animation-name: quote;
+    animation-duration: 4s;
+    animation-delay: 2s;        
+}
+
+.quote6 {
+    text-align: right;
+    position: absolute;    
+    top: 15%;
+    left: 50%;
+    opacity: 0;        
+    animation-name: quote;
+    animation-duration: 4s;
+    animation-delay: 2.25s;        
+}
+
+.background {
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -5;
+    opacity: 0;
+}
+
+.videobackground {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -50;
+    opacity: 0.5;
+    display: block; 
+}
+
+@keyframes videoappearing{
+    0% {opacity: 0.5}
+    100% {opacity: 0.9}
+}
+
+.videochaos {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -50;
+    opacity: 0.9;
+    display: none; 
+    animation-name: videoappearing;
+    animation-duration: 1s;   
+}
+
+.videoheat {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -50;
+    opacity: 0.9;
+    display: none;
+    animation-name: videoappearing;
+    animation-duration: 1s;    
+}
+
+.videobirth {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -50;
+    opacity: 0.9;
+    display: none; 
+    animation-name: videoappearing;
+    animation-duration: 1s;   
+}
+
+.alltitle {
+    width: 100%;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    font-size: 1.5vw;
+    // font-family: GeosansLight;
+    text-align: center;
+}
+
+.alltitle a {
+    text-decoration: none;
+}
+
+.titlechaos {
+    line-height: 300%;
+    height: 10%;    
+    display: block;
+    position: absolute;
+    top: 30%;
+    margin-top: -1%;
+    width: 100%;
+    z-index: 100;
+    background : rgba(255, 255, 255, 0.075);    
+    transition: 0.5s;
+    animation-name: menudisplay;
+    animation-duration: 9s;
+}
+
+.titlechaos:hover {
+    color: white;
+    background : rgba(15, 88, 0, 0.1);
+    letter-spacing: 0.8em;
+    height: 15%;
+    line-height: 500%    
+}
+
+.titleheat {
+    line-height: 300%;
+    height: 10%;    
+    display: block;
+    position: absolute;
+    top: 45%;
+    margin-top: -1%;
+    width: 100%;
+    z-index: 100;
+    background : rgba(255, 255, 255, 0.075);    
+    transition: 0.5s;   
+    animation-name: menudisplay;
+    animation-duration: 10s; 
+}
+
+.titleheat:hover {
+    color: white;   
+    background : rgba(88, 0, 0, 0.1);
+    letter-spacing: 0.8em;
+    height: 20%;
+    line-height: 650%;
+    top : 40%;
+}
+
+.titlebirth {
+    line-height: 300%;
+    height: 10%;
+    display: block;
+    position: absolute;
+    top: 60%;
+    margin-top: -1%;
+    width: 100%;
+    z-index: 100;
+    background : rgba(255, 255, 255, 0.075);    
+    transition: 0.5s;   
+    animation-name: menudisplay;
+    animation-duration: 11s;  
+}
+
+.titlebirth:hover {
+    color: white;    
+    background : rgba(0, 15, 88, 0.1);
+    letter-spacing: 0.8em;
+    height: 15%;
+    line-height: 500%;
+    top : 55%;  
+}
+
+
+.description {
+    color: white;
+    letter-spacing: 0.9em;
+    text-transform: uppercase;
+    font-size: 0.75vw;
+    // font-family: GeosansLight;
+    text-align: center;
+    display: block;
+    position: absolute;
+    top: 45%;
+    z-index: 100;
+    pointer-events: none; 
+    height: 10px;
+    margin-top: 20%; 
+    text-align: center;
+    width: 100%;
+    animation-name: menudisplay;
+    animation-duration: 9s;         
+}
+
+.mouse {
+	width: 50%;
+    background-color: white;
+	border-radius: 100%;
+    z-index: 999;    
+}
+
+.cursor {
+    opacity: 0.75;
+	width: 10px;
+    height: 10px;
+    margin-left: 15px;
+    margin-top: -15px;
+}
+
+
+/* Sound Button CSS */
+@keyframes soundbars {
+    0%{height: 2px;}
+    50%{height: 20px;}
+    100%{height: 2px;}
+}
+
+.allbars {
+    cursor: none;
+    height: 120px;
+    width: 50px;
+    left: 95%;
+    top: 5%;
+    position: absolute;
+}
+
+.bar {
+    margin: -20px 0px;
+    background: white;
+    width: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+#bar1 {
+    animation-name: soundbars;
+    animation-duration: 2s;
+    animation-delay: 0.65s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;    
+    animation-play-state: unset;
+}
+
+#bar2 {
+    animation-name: soundbars;    
+    animation-duration: 2s;
+    animation-delay: 0.15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+#bar3 {
+    animation-name: soundbars;    
+    animation-duration: 2s;
+    animation-delay: 0.25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;    
+}
+
+#bar4 {
+    animation-name: soundbars;    
+    animation-duration: 2s;
+    animation-delay: 0.505s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;    
+}

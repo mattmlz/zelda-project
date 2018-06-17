@@ -12,6 +12,7 @@ import TorusGeometry from './components/TorusGeometry.js'
 const scene = new THREE.Scene();
 const mouse = new THREE.Vector2();
 const fadeScreen = document.querySelector('.fadeScreen');
+let fadeTest = 1;
 let spikesCount = 0;
 let directLight;
 
@@ -29,10 +30,28 @@ let maskSelected = false;
 let awakening = 0;
 
 let majorasMask;
+let majorasMaskAwake;
 let majorasSpikes = [];
 
 let cameraPreviousX = 0;
 let cameraPreviousY = 0;
+
+// Music
+let backgroundMusic = new Audio('./../assets/sounds/lostWoods.mp3');
+let majorasTheme = new Audio('./../assets/sounds/MajorasTheme.mp3');
+let bellSound = new Audio('./../assets/sounds/bellSound.mp3');
+let blockPush = new Audio('./../assets/sounds/blockPush.wav');
+let blockStop = new Audio('./../assets/sounds/blockStop.wav');
+
+let linkJump1 = new Audio('./../assets/sounds/jump1.wav');
+let linkJump2 = new Audio('./../assets/sounds/jump2.wav');
+let linkClimb1 = new Audio('./../assets/sounds/climb1.wav');
+let linkClimb2 = new Audio('./../assets/sounds/climb2.wav');
+
+let skullKid1 = new Audio('./../assets/sounds/skullKid1.wav');
+let skullKid2 = new Audio('./../assets/sounds/skullKid2.wav');
+let skullKid3 = new Audio('./../assets/sounds/skullKid3.wav');
+let skullKidAppear = new Audio('./../assets/sounds/skullKidAppear.wav');
 
 
 directions.forward = false;
@@ -47,7 +66,7 @@ right = new THREE.Vector3();
 up = new THREE.Vector3(12,12,12);
 at = new THREE.Vector3();
 
-const camera = new THREE.PerspectiveCamera(70, windowWidth / windowHeight, 0.1, 4000);
+const camera = new THREE.PerspectiveCamera(70, windowWidth / windowHeight, 0.1, 1500);
 camera.matrix.extractBasis(right,up,at);
 // camera.position.set(-150,12,150)
 camera.position.set(32,620,1500);
@@ -59,11 +78,23 @@ camera.matrix.extractBasis(right,up,at);
 
 const textureLoader = new THREE.TextureLoader();
 const textures = {};
-textures.wood = textureLoader.load('./images/DeadSpruceTreeTrunk.jpg');
+textures.wood = textureLoader.load('./../assets/images/DeadSpruceTreeTrunk.png');
 textures.wood.wrapS = THREE.RepeatWrapping;
 textures.wood.wrapT = THREE.RepeatWrapping;
 textures.wood.repeat.x = 4;
 textures.wood.repeat.y = 4;
+
+textures.rock = textureLoader.load('./../assets/images/rockTexture1.png');
+textures.rock.wrapS = THREE.RepeatWrapping;
+textures.rock.wrapT = THREE.RepeatWrapping;
+textures.rock.repeat.x = 4;
+textures.rock.repeat.y = 4;
+
+textures.wood2 = textureLoader.load('./../assets/images/DeadOakTreeTrunk.png');
+textures.wood2.wrapS = THREE.RepeatWrapping;
+textures.wood2.wrapT = THREE.RepeatWrapping;
+textures.wood2.repeat.x = 4;
+textures.wood2.repeat.y = 4;
 
 // Heart Base //
 
@@ -77,8 +108,10 @@ function init(){
 	// zeldascene Loader
 	var zeldasceneLoader = new THREE.OBJLoader();
 	var majorasTree = new THREE.OBJLoader();
-    var material = new THREE.MeshPhongMaterial({color: 'grey', side: THREE.DoubleSide});
-    var treeMaterial = new THREE.MeshPhongMaterial({map: textures.wood, side: THREE.DoubleSide});
+	var majorasMaskObj = new THREE.OBJLoader();
+    var material = new THREE.MeshPhongMaterial({map: textures.rock, side: THREE.DoubleSide});
+    var treeMaterial = new THREE.MeshPhongMaterial({map: textures.wood2, side: THREE.DoubleSide});
+    var maskMaterial = new THREE.MeshPhongMaterial({map: textures.wood, side: THREE.DoubleSide});
 
 	zeldasceneLoader.load('./../assets/objects/zeldascene.obj', function (zeldascene) {
 		zeldascene.traverse(function (child) {
@@ -97,7 +130,7 @@ function init(){
     
     majorasTree.load('./../assets/objects/deadSpruce.obj', function (majorasTree) {
 		majorasTree.traverse(function (child) {
-			child.material = material;
+			child.material = treeMaterial;
 		});
 		majorasTree.scale.set(100,100,100);
 		majorasTree.castShadow = false;
@@ -106,9 +139,24 @@ function init(){
         majorasTree.position.y = 920;
 		majorasTree.position.z = -1000;
         scene.add(majorasTree);
-	});
+    });
 
-  var light = new THREE.DirectionalLight(0x9955ff, 2);
+    majorasMaskObj.load('./../assets/objects/masjorasmask.obj', function (majorasMaskObj) {
+        majorasMaskObj.traverse(function (child) {
+            child.material = maskMaterial;
+        });
+        majorasMaskObj.scale.set(1.5,1.5,1.5);
+        majorasMaskObj.castShadow = false;
+        majorasMaskObj.receiveShadow = true;
+        majorasMaskObj.rotation.x = Math.PI/2;
+        majorasMaskObj.position.x = 0;
+        majorasMaskObj.position.y = 1050;
+        majorasMaskObj.position.z = -930;
+        majorasMaskAwake = majorasMaskObj;
+    });
+    
+
+  var light = new THREE.DirectionalLight(0xdddddd, 2);
   light.position.x = 0;
   light.position.z = 700;
   light.position.y = 1500;
@@ -144,7 +192,7 @@ function init(){
 } 
 const dood = new THREE.Mesh(
     new THREE.BoxGeometry(100*2, 100/3, 100*2),
-    new THREE.MeshStandardMaterial({color: 0xff8866, metalness: 0.3, roughness: 0.3})
+    new THREE.MeshStandardMaterial({map: textures.rock, metalness: 0.3, roughness: 0.3})
 )
 dood.dir = 1;
 dood.position.x = 32;
@@ -156,7 +204,7 @@ scene.add(dood);
 
 const dood2 = new THREE.Mesh(
     new THREE.BoxGeometry(100*2, 100/3, 100*2),
-    new THREE.MeshStandardMaterial({color: 0xff8866, metalness: 0.3, roughness: 0.3})
+    new THREE.MeshStandardMaterial({map: textures.rock, metalness: 0.3, roughness: 0.3})
 )
 dood2.dir = 2;
 dood2.position.x = 32;
@@ -169,7 +217,7 @@ scene.add(dood2);
 
 function addShape( shape, extrudeSettings, x, y, z, s ) {
   var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-  var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial({color: 0xfb6f49, metalness: 0.3, roughness: 0.8 }) );
+  var mesh = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial({map: textures.wood, metalness: 0.3, roughness: 0.8 }) );
   mesh.position.set( -8, 1038, -960 );
   mesh.rotation.set( 3, 0, 0 );
   mesh.scale.set( s, s, s );	
@@ -201,10 +249,23 @@ window.addEventListener(
 const animate = () =>
 {
     requestAnimationFrame(animate);
-    //console.log(camera.position);
 
     // Jump animations
-    if(jump == 1){
+    if(jump < 1){
+        if(fadeTest > 0){
+            fadeTest -= 0.005;
+            fadeScreen.style.opacity = `${fadeTest}`; 
+        }else{
+            fadeScreen.style.display = "none";
+        }
+    }else if(jump == 1){
+        if(fadeTest > 0){
+            fadeTest -= 0.005;
+            fadeScreen.style.opacity = `${fadeTest}`; 
+        }else{
+            fadeScreen.style.display = "none";
+        }
+        backgroundMusic.play();
         if(transition < 1){
             transition += 0.01;
             if(camera.position.x != dood.position.x){
@@ -341,7 +402,10 @@ const animate = () =>
             }
             camera.position.x += Math.round((Math.random() - 0.5)*3);
             camera.position.y += Math.round((Math.random() - 0.5)*3);
+            blockPush.play();
         }else{
+            blockPush.pause();
+            blockStop.play();
             camera.position.x = cameraPreviousX;
             camera.position.y = cameraPreviousY;
         }
@@ -356,7 +420,6 @@ const animate = () =>
             transition = 1;
             if(spikesCount < 11){
                 // Left Side
-                console.log(majorasSpikes.length);
                 if(spikesCount >= 1 && majorasSpikes.length < 1){
                         createSpike(-8, 1058, -872, 0);
                 }else if(spikesCount >= 2 && majorasSpikes.length < 2){
@@ -412,30 +475,64 @@ const animate = () =>
         if(maskSelected){
             if(awakening == 0){
                 awakening = mask;
-                mask++;
+                mask = Math.round(mask + 1);
                 maskSelected = false;
             }
         }
     }else if(mask == 10){
-        fadeScreen.style.display = "block";
-        if(fadeScreen.style.opacity < 1){
-            fadeScreen.style.opacity += 0.05; 
+        if(fadeScreen.style.display != "block"){
+            fadeScreen.style.display = "block";
+        }
+        if(fadeTest < 1){
+            fadeTest += 0.01;
+            fadeScreen.style.opacity = `${fadeTest}`; 
         }else{
+            backgroundMusic.pause();
+            bellSound.play();
+            skullKidAppear.play();
             mask = 11; 
         }
-    }else if(mask > 10){
-        
+    }else if(mask > 10 && mask < 12){
+        if(!maskSelected){
+            window.addEventListener('mousedown',
+            ()=>{
+                maskSelected = true;
+            },
+            false
+            )
+        }else{
+            majorasTheme.play();
+            scene.remove(majorasMask);
+            for(let i = 0; i < majorasSpikes.length; i++){
+                scene.remove(majorasSpikes[i]);
+            }
+            scene.add(majorasMaskAwake);
+            if(fadeTest > 0){
+                fadeTest -= 0.01;
+                fadeScreen.style.opacity = `${fadeTest}`; 
+            }else{
+                mask = 12;
+            }
+        }
     }
     
     // Light change
     if(mask == 4){
         directLight.color.r = 0.8;
+        directLight.color.g = 0.55;
+        directLight.color.b = 0.80;
+        skullKid1.play();
+        mask += 0.1;
         // directLight.color.g *= 0.8;
         // directLight.color.b *= 0.6;
     }else if(mask == 6){
+        skullKid2.play();
+        mask += 0.1;
         directLight.color.g = 0.25;
-        directLight.color.b = 0.85;
+        directLight.color.b = 0.70;
     }else if(mask == 9){
+        skullKid3.play();
+        mask += 0.1;
         directLight.color.g = 0.2;
         directLight.color.b = 0.3;
     }
@@ -505,45 +602,35 @@ animate()
 document.addEventListener('keydown', (e) =>
 {
     switch(e.keyCode) {
-        case 37: // Left
-        case 81: // Q
-            directions.left = true;
-            break;
- 
+
         case 38: // Up
             directions.up = true;
             break;
-        case 90: // Z
-            directions.forward = true;
-            break;
- 
-        case 39: // Right
-        case 68: // D
-            directions.right = true;
-            break;
- 
+
         case 40: // Down
             directions.down = true;
             break;
-        case 83: // S
-            directions.backward = true;
-            break;
         case 84:
-            console.log(camera.position);
             break;
         case 32: // Spacebar
             if((jump == 0) && (dood.position.x >= -164) && (dood.position.x <= 164)){
                 jump = 1;
+                linkJump1.play();
             }else if((jump == 1) && (transition >= 0.8) && (dood.position.x >= (dood2.position.x - 164)) && (dood.position.x <= (dood2.position.x + 164))){
                 jump = 2;
+                linkJump2.play();
             }else if((jump == 2) && (transition >= 1.8) && (dood2.position.x >= -72) && (dood2.position.x <= 228)){
                 jump = 3;
+                linkJump1.play();
             }else if((jump == 3) && (transition >= 2.8)){
                 jump = 4;
+                linkClimb1.play();
             }else if((jump == 4) && (transition >= 3.8)){
                 jump = 5;
+                linkClimb2.play();
             }else if((jump == 5) && (transition >= 4.8)){
                 jump = 6;
+                linkClimb1.play();
             }
             break;
     }
@@ -552,11 +639,7 @@ document.addEventListener('keyup', (e)=>
 {
     // keyboard[event.keyCode] = false 
     switch(e.keyCode) {
-        case 37: // Left
-        case 81: // Q
-            directions.left = false;
-        break;
- 
+
         case 38: // Up
             directions.up = false;
         break;
@@ -564,21 +647,10 @@ document.addEventListener('keyup', (e)=>
 
             dothis();
             break;
-        case 90: // Z
-            directions.forward = false;
-        break;
- 
-        case 39: // Right
-        case 68: // D
-            directions.right = false;
-        break;
  
         case 40: // Down
             directions.down = false;
             break;
-        case 83: // S
-            directions.backward = false;
-        break;
     }  
 })
 let currentY = 0;
@@ -614,7 +686,6 @@ window.addEventListener("mousemove", (event) =>
 window.addEventListener('mousedown', onMouseDown, false);
 
 function onMouseDown(e) {
-    console.log("Pute");
     var vectorMouse = new THREE.Vector3( //vector from camera to mouse
         -(window.innerWidth/2-e.clientX)*2/window.innerWidth,
         (window.innerHeight/2-e.clientY)*2/window.innerHeight,
@@ -625,7 +696,7 @@ function onMouseDown(e) {
     var vectorObject = new THREE.Vector3(); //vector from camera to object
     vectorObject.set(majorasMask.position.x - camera.position.x, majorasMask.position.y - camera.position.y, majorasMask.position.z - camera.position.z);
     vectorObject.normalize();
-    if (vectorMouse.angleTo(vectorObject)*180/Math.PI < 15) {
+    if (vectorMouse.angleTo(vectorObject)*180/Math.PI < 30) {
         if(awakening <= 0){
             maskSelected = true;
         }
@@ -635,7 +706,9 @@ function onMouseDown(e) {
 window.addEventListener(
     'mouseup',
     ()=>{
-        maskSelected = false
+        if(mask < 10){
+            maskSelected = false;
+        }
     },
     false
 );
@@ -643,7 +716,7 @@ window.addEventListener(
 function createSpike(x, y, z, entry){
     const spike = new THREE.Mesh(
         new THREE.ConeGeometry( 5, 20, 32 ),
-        new THREE.MeshStandardMaterial({color: 0xff8866, metalness: 0.3, roughness: 0.3})
+        new THREE.MeshStandardMaterial({map: textures.wood, metalness: 0.3, roughness: 0.3})
     )
     spike.dir = 1;
     spike.position.x = x;

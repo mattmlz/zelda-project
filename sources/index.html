@@ -2,11 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Projet Annuel</title>
-    <link rel="stylesheet" href="./assets/stylesheet/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Evil Kinds</title>
+    <!-- <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css"> -->
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="images/favicons/manifest.json">
+    <link rel="mask-icon" href="images/favicons/safari-pinned-tab.svg" color="#5bbad5"> -->
+    <!-- <link href="fonts/GeosansLight-Oblique.ttf" rel="">
+    <link href="fonts/GeosansLight.ttf" rel="">
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel=""> -->
+    <link rel="stylesheet" href="./../assets/stylesheet/main.css">
+    <meta name="theme-color" content="#ffffff">
 </head>
-<body>
+    <body>
+        <div class="mouse cursor"></div>
+            <button class="allbars">
+                <div id="bar1" class="bar"></div>
+                <div id="bar2" class="bar"></div>
+                <div id="bar3" class="bar"></div>
+                <div id="bar4" class="bar"></div>
+            </button>
+       
+        <button class="enter">Enter</button>
+        <div class="toggle">
+            <div class="evilkinds">Evil Kinds</div>
+            <div class="quote">
+                <div class="quote1">"You underestimate the power of the Dark Side.<br>If you will not fight, then you will meet your destiny!"<br>- Darth Vader</div>      
+                <div class="quote2">"I'm sorry, Dave.<br>I'm afraid I can't do that."<br>- HAL</div>      
+                <div class="quote3">"Get over here !"<br>- Scorpion</div>      
+                <div class="quote4">"What is better, to be born good,<br>Or to overcome your evil ?"<br>- Paathurnax</div>    
+                <div class="quote5">"Why so serious ?"<br>- Joker</div>      
+                <div class="quote6">"like my old man said,<br> what doesn't kill you... just makes me stronger!<br>- Ultron</div>      
+            </div>
+            <div class="menu"></div>
+            <div class="alltitle">
+                <a href="./pages/majora.html" target="_blank" class="titlechaos">Chaotic beginnings</a>
+                <a href="./pages/lotr.html" target="_blank" class="titleheat">Heat in the mountain</a>
+                <a href="#" target="_blank" class="titlebirth">Birth of a fury</a> 
+            </div>
+            <div class="description">Evil Kinds</div>
+        </div>
 
-    <script src="./assets/javascript/bundle-index.js"></script>
-</body>
+        <!-- Audio -->
+        <audio class="audiochaos">
+            <source class="audiochaos" src="./assets/sounds/audiochaos.wav" type="audio/wav">
+        </audio>
+
+        <audio class="audioheat">
+            <source class="audioheat" src="./assets/sounds/audioheat.wav" type="audio/wav">
+        </audio>
+
+        <audio class="audiobirth">   
+            <source src="./assets/sounds/audiobirth.wav" type="audio/wav">
+        </audio>
+
+        <!-- Video -->
+        <video autoplay muted loop class="videochaos">
+            <source src="/assets/images/videochaos.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted loop class="videoheat">
+            <source src="/assets/images/videoheat.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted loop class="videobirth">
+            <source src="/assets/images/videobirth.mp4" type="video/mp4">
+        </video>      
+        <video autoplay muted loop class="videobackground">
+            <source src="/assets/images/videobackground.mp4" type="video/mp4">
+        </video>
+        <div class="background"></div>                
+        <!-- <script src="scripts/script.js"></script> -->
+        <script src="./assets/javascript/bundle-index.js"></script>
+    </body>
 </html>
+
